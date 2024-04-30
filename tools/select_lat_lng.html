@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>緯度経度取得</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        let map;
+        let marker_center;
+        function show_map() {
+            map = L.map('map');
+            L.control.scale().addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+            const icon_center = L.icon({
+                iconUrl: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 264 264"><path stroke="#000" stroke-width="4" d="m7,132h96m15,0h28m15,0h96M132,7v96m0,15v28m0,15v96"/></svg>'),
+                iconSize: [100, 100],
+                iconAnchor: [50, 50]
+            });
+            map.setView([35.6809591, 139.7673068], 5);
+            marker_center = L.marker(map.getCenter(), { icon: icon_center, zIndexOffset: 1000, interactive: false }).addTo(map);
+            map.on('move', update_location);
+            update_location();
+        }
+        function update_location() {
+            marker_center.setLatLng(map.getCenter());
+            const center = map.getCenter();
+            document.getElementById('location').value = center.lat + ', ' + center.lng;
+        }
+        function move_to_location() {
+            const latlng = document.getElementById('location').value.split(',');
+            if (latlng.length == 2) {
+                map.setView([Number(latlng[0]), Number(latlng[1])]);
+            }
+        }
+        window.addEventListener('load', () => { show_map(); });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card text-center m-3">
+            <div class="card-body">
+                <h5 class="card-title">緯度経度取得</h5>
+                <p class="card-text">地図をスクロールまたは拡大・縮小して十字の中央に目的の場所をあわせると 緯度, 経度 を示します。反対に 緯度, 経度 を入力すると、指定した場所を中央に表示します。</p>
+            </div>
+            <div class="card-footer text-body-secondary">
+                このページは JavaScript のみで作成されていますので、情報はサーバに送信されません。安心してご利用ください。
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m-3">
+                <input id="location" type="text" class="form-control" style="width:100%;" onchange="move_to_location();">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="map" style="width: 100%; height: 600px;"></div>
+    </div>
+</body>
+
+</html>
