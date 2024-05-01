@@ -2,56 +2,97 @@
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="cottonspace" />
     <title>ランダム文字列生成</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <style>
-        a {
-            text-decoration: none;
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../css/styles.css" rel="stylesheet" />
     <script>
-        function generate_random_text(id, length) {
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)';
+        function generate_random_text() {
+            const length = Number(document.getElementById('length').value);
+            let chars = '';
+            if (document.getElementById('with_number').checked) {
+                chars += '0123456789';
+            }
+            if (document.getElementById('with_alpha_lower').checked) {
+                chars += 'abcdefghijklmnopqrstuvwxyz';
+            }
+            if (document.getElementById('with_alpha_upper').checked) {
+                chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            }
+            if (document.getElementById('with_symbol').checked) {
+                chars += '!@#$%^&*(-_=+)';
+            }
             let result = '';
             let array = new Uint8Array(length);
             crypto.getRandomValues(array);
             for (var i = 0; i < length; i++) {
                 result += chars.charAt(Math.floor((array[i] / 256) * chars.length));
             }
-            document.getElementById(id).value = result;
+            document.getElementById('random_text').value = result;
         }
     </script>
 </head>
 
-<body>
-    <div class="container">
-        <div class="card text-center m-3">
-            <div class="card-body">
-                <h5 class="card-title">ランダム文字列生成</h5>
-                <p class="card-text">英字と数字と一部の記号を用いたランダムな文字列を指定した文字数で生成します。</p>
-            </div>
-            <div class="card-footer text-body-secondary">
-                このページは JavaScript のみで作成されていますので、情報はサーバに送信されません。安心してご利用ください。
-            </div>
-        </div>
-        <div class="row">
-            <div class="col m-3">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline-secondary" onclick="generate_random_text('random_text', 50);">50 文字</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="generate_random_text('random_text', 60);">60 文字</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="generate_random_text('random_text', 70);">70 文字</button>
-                </div>
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container px-4">
+            <a class="navbar-brand" href="../#page-top">cottonspace.github.io</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../#tools">Tools</a></li>
+                </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col m-3">
-                <input id="random_text" type="text" class="form-control" style="width:100%;">
-            </div>
+    </nav>
+    <!-- Header-->
+    <header class="bg-primary bg-gradient text-white">
+        <div class="container px-4 text-center">
+            <h1 class="fw-bolder">ランダム文字列生成</h1>
+            <p class="lead">英字と数字と一部の記号を用いたランダムな文字列を指定した文字数で生成します。</p>
         </div>
-    </div>
+    </header>
+    <!-- Main section-->
+    <section id="main">
+        <div class="m-3">
+            <label for="length" class="form-label">文字数</label>
+            <input id="length" class="form-control" type="number" min="1" max="256" value="50">
+            <div class="form-check m-3">
+                <input class="form-check-input" type="checkbox" value="" id="with_number" checked>
+                <label class="form-check-label" for="with_number">数値</label>
+            </div>
+            <div class="form-check m-3">
+                <input class="form-check-input" type="checkbox" value="" id="with_alpha_lower" checked>
+                <label class="form-check-label" for="with_alpha_lower">英子文字</label>
+            </div>
+            <div class="form-check m-3">
+                <input class="form-check-input" type="checkbox" value="" id="with_alpha_upper" checked>
+                <label class="form-check-label" for="with_alpha_upper">英大文字</label>
+            </div>
+            <div class="form-check m-3">
+                <input class="form-check-input" type="checkbox" value="" id="with_symbol" checked>
+                <label class="form-check-label" for="with_symbol">記号</label>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="generate_random_text();">生成</button>
+        </div>
+        <div class="m-3"><input id="random_text" type="text" class="form-control" style="width:100%;"></div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container px-4">
+            <p class="m-0 text-center text-white">Copyright &copy; cottonspace 2024</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="../js/scripts.js"></script>
 </body>
 
 </html>

@@ -2,19 +2,16 @@
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="cottonspace" />
     <title>django-web-timecard 簡易設定ツール</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <style>
-        a {
-            text-decoration: none;
-        }
-    </style>
     <script>
         let map;
         let marker_center;
@@ -174,139 +171,162 @@
     </script>
 </head>
 
-<body>
-    <div class="container">
-        <div class="card text-center m-3">
-            <div class="card-body">
-                <h5 class="card-title">django-web-timecard 簡易設定ツール</h5>
-                <p class="card-text">local_settings.py ファイルの設定を画面からの入力で作成できます。作成したファイルには画面で入力したパスワードなどの情報が含まれますので、他人に知られないように管理してください。</p>
-            </div>
-            <div class="card-footer text-body-secondary">
-                このページは JavaScript のみで作成されていますので、情報はサーバに送信されません。安心してご利用ください。
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container px-4">
+            <a class="navbar-brand" href="../#page-top">cottonspace.github.io</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../#tools">Tools</a></li>
+                </ul>
             </div>
         </div>
-    </div>
-    <div id="step-1" class="container mb-1">
-        <h4>1. 用途</h4>
-        <form id="form-1" onsubmit="return false;" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="col mb-3">
+    </nav>
+    <!-- Header-->
+    <header class="bg-primary bg-gradient text-white">
+        <div class="container px-4 text-center">
+            <h1 class="fw-bolder">django-web-timecard 簡易設定ツール</h1>
+            <p class="lead">local_settings.py ファイルの設定を画面からの入力で作成できます。</p>
+        </div>
+    </header>
+    <!-- Main section-->
+    <section id="main">
+        <div id="step-1" class="container mb-1">
+            <h4>1. 用途</h4>
+            <form id="form-1" onsubmit="return false;" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col mb-3">
 
-                    <fieldset>
-                        <label for="pattern-select" class="form-label mb-2">用途</label>
-                        <select class="form-select mb-2" id="pattern-select" onchange="form_update();">
-                            <option value="local" selected>ローカル開発・テスト用</option>
-                            <option value="server">サーバ実行用</option>
-                        </select>
-                    </fieldset>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div id="step-2-local" class="container mb-1">
-        <h4>2. サーバの設定</h4>
-        <form id="form-2-local" onsubmit="return false;" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="col mb-3">
-                    <fieldset>
-                        <label for="database-engine-select-local" class="form-label mb-2">データベース</label>
-                        <div class="input-group mb-2">
-                            <select class="form-select" id="database-engine-select-local" onchange="form_update();">
-                                <option value="sqlite">SQLite</option>
+                        <fieldset>
+                            <label for="pattern-select" class="form-label mb-2">用途</label>
+                            <select class="form-select mb-2" id="pattern-select" onchange="form_update();">
+                                <option value="local" selected>ローカル開発・テスト用</option>
+                                <option value="server">サーバ実行用</option>
                             </select>
-                            <span class="input-group-text">ファイル名</span>
-                            <input type="text" class="form-control" id="database-engine-name-local" placeholder="ファイル名" value="db.sqlite3" onchange="form_update();" required>
-                        </div>
-                    </fieldset>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div id="step-2-server" class="container mb-1">
-        <h4>2. サーバの設定</h4>
-        <form id="form-2-server" onsubmit="return false;" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="col mb-3">
-                    <fieldset>
-                        <label for="database-engine-allowed-hosts-server" class="form-label mb-2">サーバを公開するドメイン</label>
-                        <input type="text" class="form-control mb-2" id="database-engine-allowed-hosts-server" placeholder="ドメイン名 (example.com)" onchange="form_update();" required>
-                    </fieldset>
+            </form>
+        </div>
+        <div id="step-2-local" class="container mb-1">
+            <h4>2. サーバの設定</h4>
+            <form id="form-2-local" onsubmit="return false;" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col mb-3">
+                        <fieldset>
+                            <label for="database-engine-select-local" class="form-label mb-2">データベース</label>
+                            <div class="input-group mb-2">
+                                <select class="form-select" id="database-engine-select-local" onchange="form_update();">
+                                    <option value="sqlite">SQLite</option>
+                                </select>
+                                <span class="input-group-text">ファイル名</span>
+                                <input type="text" class="form-control" id="database-engine-name-local" placeholder="ファイル名" value="db.sqlite3" onchange="form_update();" required>
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col mb-3">
-                    <fieldset>
-                        <label for="database-engine-host-server" class="form-label mb-2">データベースサーバ</label>
-                        <input type="text" class="form-control mb-2" id="database-engine-host-server" placeholder="ホスト名" value="localhost" onchange="form_update();" required>
-                        <label for="database-engine-select-server" class="form-label mb-2">データベース</label>
-                        <div class="input-group mb-2">
-                            <select class="form-select" id="database-engine-select-server" onchange="form_update();">
-                                <option value="mysql">MySQL</option>
-                                <option value="postgresql">PostgreSQL</option>
-                            </select>
-                            <span class="input-group-text">DB</span>
-                            <input type="text" class="form-control" id="database-engine-name-server" placeholder="データベース名" value="web_timecard" onchange="form_update();" required>
-                        </div>
-                        <label for="database-engine-user-server" class="form-label mb-2">データベースユーザ</label>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">ユーザ</span>
-                            <input type="text" class="form-control" id="database-engine-user-server" placeholder="ユーザ" onchange="form_update();" required>
-                            <span class="input-group-text">パスワード</span>
-                            <input type="text" class="form-control" id="database-engine-password-server" placeholder="パスワード" onchange="form_update();" required>
-                        </div>
-                    </fieldset>
+            </form>
+        </div>
+        <div id="step-2-server" class="container mb-1">
+            <h4>2. サーバの設定</h4>
+            <form id="form-2-server" onsubmit="return false;" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col mb-3">
+                        <fieldset>
+                            <label for="database-engine-allowed-hosts-server" class="form-label mb-2">サーバを公開するドメイン</label>
+                            <input type="text" class="form-control mb-2" id="database-engine-allowed-hosts-server" placeholder="ドメイン名 (example.com)" onchange="form_update();" required>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div id="step-3" class="container mb-1">
-        <h4>3. 位置情報に関する設定</h4>
-        <form id="form-3" onsubmit="return false;" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="col mb-3">
-                    <fieldset>
-                        <div class="form-check m-3">
-                            <input class="form-check-input" type="checkbox" id="location-enabled" checked onchange="form_update();">
-                            <label class="form-check-label" for="location-enabled">端末から位置情報を取得する</label>
-                        </div>
-                        <label for="location-origin-lat" class="form-label mb-2">距離判定の基点とする位置</label>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">緯度</span>
-                            <input type="text" class="form-control" id="location-origin-lat" onchange="form_update(); move_to_location();" required>
-                            <span class="input-group-text">経度</span>
-                            <input type="text" class="form-control" id="location-origin-lng" onchange="form_update(); move_to_location();" required>
-                        </div>
-                        <button class="btn btn-sm btn-outline-secondary mb-2" type="button" onclick="get_location();">地図の中心の位置を取得</button>
-                        <div id="map" style="width: 100%; height: 400px;"></div>
-                        <label for="location-max-accuracy" class="form-label mt-2 mb-2">距離判定を実行する最大の精度 (m)</label>
-                        <input type="number" class="form-control mb-2" id="location-max-accuracy" min="0" step="0.1" value="50" onchange="form_update();" required>
-                        <label for="location-max-distance" class="form-label mb-2">距離判定で適正とみなす距離 (m)</label>
-                        <input type="number" class="form-control mb-2" id="location-max-distance" min="0" step="0.1" value="100" onchange="form_update();" required>
-                    </fieldset>
+                <div class="row">
+                    <div class="col mb-3">
+                        <fieldset>
+                            <label for="database-engine-host-server" class="form-label mb-2">データベースサーバ</label>
+                            <input type="text" class="form-control mb-2" id="database-engine-host-server" placeholder="ホスト名" value="localhost" onchange="form_update();" required>
+                            <label for="database-engine-select-server" class="form-label mb-2">データベース</label>
+                            <div class="input-group mb-2">
+                                <select class="form-select" id="database-engine-select-server" onchange="form_update();">
+                                    <option value="mysql">MySQL</option>
+                                    <option value="postgresql">PostgreSQL</option>
+                                </select>
+                                <span class="input-group-text">DB</span>
+                                <input type="text" class="form-control" id="database-engine-name-server" placeholder="データベース名" value="web_timecard" onchange="form_update();" required>
+                            </div>
+                            <label for="database-engine-user-server" class="form-label mb-2">データベースユーザ</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">ユーザ</span>
+                                <input type="text" class="form-control" id="database-engine-user-server" placeholder="ユーザ" onchange="form_update();" required>
+                                <span class="input-group-text">パスワード</span>
+                                <input type="text" class="form-control" id="database-engine-password-server" placeholder="パスワード" onchange="form_update();" required>
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div id="step-4" class="container mb-1">
-        <h4>4. 勤務時間に関する設定</h4>
-        <form id="form-4" onsubmit="return false;" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="col mb-3">
-                    <fieldset>
-                        <label for="min-behind-min" class="form-label mb-2">遅刻または早退とみなす最小時間 (分)</label>
-                        <input type="number" class="form-control mb-2" id="min-behind-min" min="1" step="1" value="1" onchange="form_update();" required>
-                        <label for="min-early-min" class="form-label mb-2">早出とみなす最小時間 (分)</label>
-                        <input type="number" class="form-control mb-2" id="min-early-min" min="1" step="1" value="30" onchange="form_update();" required>
-                        <label for="min-overtime-min" class="form-label mb-2">残業とみなす最小時間 (分)</label>
-                        <input type="number" class="form-control mb-2" id="min-overtime-min" min="1" step="1" value="30" onchange="form_update();" required>
-                    </fieldset>
+            </form>
+        </div>
+        <div id="step-3" class="container mb-1">
+            <h4>3. 位置情報に関する設定</h4>
+            <form id="form-3" onsubmit="return false;" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col mb-3">
+                        <fieldset>
+                            <div class="form-check m-3">
+                                <input class="form-check-input" type="checkbox" id="location-enabled" checked onchange="form_update();">
+                                <label class="form-check-label" for="location-enabled">端末から位置情報を取得する</label>
+                            </div>
+                            <label for="location-origin-lat" class="form-label mb-2">距離判定の基点とする位置</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">緯度</span>
+                                <input type="text" class="form-control" id="location-origin-lat" onchange="form_update(); move_to_location();" required>
+                                <span class="input-group-text">経度</span>
+                                <input type="text" class="form-control" id="location-origin-lng" onchange="form_update(); move_to_location();" required>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary mb-2" type="button" onclick="get_location();">地図の中心の位置を取得</button>
+                            <div id="map" style="width: 100%; height: 400px;"></div>
+                            <label for="location-max-accuracy" class="form-label mt-2 mb-2">距離判定を実行する最大の精度 (m)</label>
+                            <input type="number" class="form-control mb-2" id="location-max-accuracy" min="0" step="0.1" value="50" onchange="form_update();" required>
+                            <label for="location-max-distance" class="form-label mb-2">距離判定で適正とみなす距離 (m)</label>
+                            <input type="number" class="form-control mb-2" id="location-max-distance" min="0" step="0.1" value="100" onchange="form_update();" required>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="text-center m-5">
-        <button class="btn btn-primary" type="button" onclick="download_settings('local_settings.py');">設定ファイルをダウンロード</button>
-    </div>
+            </form>
+        </div>
+        <div id="step-4" class="container mb-1">
+            <h4>4. 勤務時間に関する設定</h4>
+            <form id="form-4" onsubmit="return false;" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col mb-3">
+                        <fieldset>
+                            <label for="min-behind-min" class="form-label mb-2">遅刻または早退とみなす最小時間 (分)</label>
+                            <input type="number" class="form-control mb-2" id="min-behind-min" min="1" step="1" value="1" onchange="form_update();" required>
+                            <label for="min-early-min" class="form-label mb-2">早出とみなす最小時間 (分)</label>
+                            <input type="number" class="form-control mb-2" id="min-early-min" min="1" step="1" value="30" onchange="form_update();" required>
+                            <label for="min-overtime-min" class="form-label mb-2">残業とみなす最小時間 (分)</label>
+                            <input type="number" class="form-control mb-2" id="min-overtime-min" min="1" step="1" value="30" onchange="form_update();" required>
+                        </fieldset>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="text-center m-5">
+            <p>作成したファイルには画面で入力したパスワードなどの情報が含まれますので、他人に知られないように管理してください。</p>
+            <button class="btn btn-primary" type="button" onclick="download_settings('local_settings.py');">設定ファイルをダウンロード</button>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container px-4">
+            <p class="m-0 text-center text-white">Copyright &copy; cottonspace 2024</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="../js/scripts.js"></script>
 </body>
 
 </html>
