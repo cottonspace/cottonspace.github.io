@@ -35,7 +35,7 @@
         function move_to_location() {
             map.setView([Number($('#location-origin-lat').val()), Number($('#location-origin-lng').val())]);
         }
-        function get_location() {
+        function set_location() {
             const center = map.getCenter();
             $('#location-origin-lat').val(center.lat);
             $('#location-origin-lng').val(center.lng);
@@ -163,7 +163,7 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-        $(document).ready(function () { show_map(); get_location(); form_update(); });
+        $(document).ready(function () { show_map(); set_location(); form_update(); });
     </script>
 </head>
 
@@ -280,7 +280,8 @@
                                 <span class="input-group-text">経度</span>
                                 <input type="text" class="form-control" id="location-origin-lng" onchange="form_update(); move_to_location();" required>
                             </div>
-                            <button class="btn btn-sm btn-outline-secondary mb-2" type="button" onclick="get_location();">地図の中心の位置を取得</button>
+                            <button class="btn btn-sm btn-outline-secondary mb-2" type="button" onclick="set_location();">地図の中心の位置を取得</button>
+                            <button class="btn btn-sm btn-outline-secondary mb-2" type="button" onclick="map.locate({ setView: true, enableHighAccuracy: true });">現在地に移動</button>
                             <div id="map" style="width: 100%; height: 400px;"></div>
                             <label for="location-max-accuracy" class="form-label mt-2 mb-2">距離判定を実行する最大の精度 (m)</label>
                             <input type="number" class="form-control mb-2" id="location-max-accuracy" min="0" step="0.1" value="50" onchange="form_update();" required>
