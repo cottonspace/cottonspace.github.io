@@ -154,15 +154,6 @@
             lines.push('# 距離判定で適正とみなす距離 (m)');
             lines.push('MAX_DISTANCE = ' + $('#location-max-distance').val());
             lines.push('');
-            lines.push('# 遅刻または早退とみなす最小時間 (分)');
-            lines.push('MIN_BEHIND_MIN = ' + $('#min-behind-min').val());
-            lines.push('');
-            lines.push('# 早出とみなす最小時間 (分)');
-            lines.push('MIN_EARLY_MIN = ' + $('#min-early-min').val());
-            lines.push('');
-            lines.push('# 残業とみなす最小時間 (分)');
-            lines.push('MIN_OVERTIME_MIN = ' + $('#min-overtime-min').val());
-            lines.push('');
             const text = lines.join('\n');
             const blob = new Blob([text], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -295,23 +286,6 @@
                             <input type="number" class="form-control mb-2" id="location-max-accuracy" min="0" step="0.1" value="50" onchange="form_update();" required>
                             <label for="location-max-distance" class="form-label mb-2">距離判定で適正とみなす距離 (m)</label>
                             <input type="number" class="form-control mb-2" id="location-max-distance" min="0" step="0.1" value="100" onchange="form_update();" required>
-                        </fieldset>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div id="step-4" class="container mb-1">
-            <h4>4. 勤務時間に関する設定</h4>
-            <form id="form-4" onsubmit="return false;" class="needs-validation" novalidate>
-                <div class="row">
-                    <div class="col mb-3">
-                        <fieldset>
-                            <label for="min-behind-min" class="form-label mb-2">遅刻または早退とみなす最小時間 (分)</label>
-                            <input type="number" class="form-control mb-2" id="min-behind-min" min="1" step="1" value="1" onchange="form_update();" required>
-                            <label for="min-early-min" class="form-label mb-2">早出とみなす最小時間 (分)</label>
-                            <input type="number" class="form-control mb-2" id="min-early-min" min="1" step="1" value="1" onchange="form_update();" required>
-                            <label for="min-overtime-min" class="form-label mb-2">残業とみなす最小時間 (分)</label>
-                            <input type="number" class="form-control mb-2" id="min-overtime-min" min="1" step="1" value="1" onchange="form_update();" required>
                         </fieldset>
                     </div>
                 </div>
