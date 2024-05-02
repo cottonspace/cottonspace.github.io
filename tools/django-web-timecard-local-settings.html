@@ -62,6 +62,11 @@
                 $('#form-2-local').removeClass('needs-validation');
                 $('#form-2-server').addClass('needs-validation');
             }
+            if ($('#location-enabled').prop('checked')) {
+                $('#location-settings').removeClass('d-none');
+            } else {
+                $('#location-settings').addClass('d-none');
+            }
         }
         function download_settings(filename) {
             let all_valid = true;
@@ -167,7 +172,7 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-        $(document).ready(function () { form_update(); show_map(); });
+        $(document).ready(function () { show_map(); get_location(); form_update(); });
     </script>
 </head>
 
@@ -265,12 +270,18 @@
             <h4>3. 位置情報に関する設定</h4>
             <form id="form-3" onsubmit="return false;" class="needs-validation" novalidate>
                 <div class="row">
-                    <div class="col mb-3">
+                    <div class="col m-3">
                         <fieldset>
-                            <div class="form-check m-3">
-                                <input class="form-check-input" type="checkbox" id="location-enabled" checked onchange="form_update();">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="location-enabled" onchange="form_update();">
                                 <label class="form-check-label" for="location-enabled">端末から位置情報を取得する</label>
                             </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row" id="location-settings">
+                    <div class="col mb-3">
+                        <fieldset>
                             <label for="location-origin-lat" class="form-label mb-2">距離判定の基点とする位置</label>
                             <div class="input-group mb-2">
                                 <span class="input-group-text">緯度</span>
