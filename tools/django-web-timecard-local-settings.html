@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="author" content="cottonspace" />
-    <title>web-timecard 簡易設定</title>
+    <title>Web 勤怠管理 簡易設定</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -178,7 +178,7 @@
     <!-- Header-->
     <header class="bg-primary bg-gradient text-white">
         <div class="container px-4 text-center">
-            <h1 class="fw-bolder">web-timecard 簡易設定</h1>
+            <h1 class="fw-bolder">Web 勤怠管理 簡易設定</h1>
             <p class="lead">local_settings.py ファイルを画面からの入力で作成できます。</p>
         </div>
     </header>
@@ -299,9 +299,9 @@
                     <div class="col m-3">
                         <fieldset>
                             <label for="year-first-month" class="form-label mb-2">年度の開始月</label>
-                            <input type="number" class="form-control mb-2" id="year-first-month" placeholder="4/1 から年度がはじまる場合は 4" min="1" max="12" step="1" onchange="form_update();" required>
+                            <input type="number" class="form-control mb-2" id="year-first-month" placeholder="4月からはじまる場合は 4 を入力" min="1" max="12" step="1" onchange="form_update();" required>
                             <label for="calendar-months" class="form-label mb-2">営業日カレンダを生成する月数</label>
-                            <input type="number" class="form-control mb-2" id="calendar-months" placeholder="12 か月先までカレンダを生成する場合は 12" min="1" max="24" step="1" onchange="form_update();" required>
+                            <input type="number" class="form-control mb-2" id="calendar-months" placeholder="1年先まで生成する場合は 12 を入力" min="1" max="24" step="1" onchange="form_update();" required>
                             <label for="session-cookie-age" class="form-label mb-2">ログイン状態を保つ期間</label>
                             <select class="form-select mb-2" id="session-cookie-age" onchange="form_update();">
                                 <option value="3600">1時間</option>
