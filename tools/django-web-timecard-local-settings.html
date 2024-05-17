@@ -114,6 +114,9 @@
                 lines.push('        \'HOST\': \'' + $('#database-engine-host-server').val() + '\',');
                 if ($('#database-engine-select-server').val() == 'mysql') {
                     lines.push('        \'PORT\': \'3306\',');
+                    lines.push('        \'OPTIONS\': {');
+                    lines.push('            \'init_command\': \"SET sql_mode=\'STRICT_TRANS_TABLES\'\",');
+                    lines.push('        \},');
                 } else if ($('#database-engine-select-server').val() == 'postgresql') {
                     lines.push('        \'PORT\': \'5432\',');
                 }
